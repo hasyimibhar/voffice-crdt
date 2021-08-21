@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "http-server": "^13.0.1",
+    "spritesheet-js": "^1.2.6"
+  },
+  "scripts": {
+    "serve": "http-server",
+    "spritesheet-bg": "spritesheet-js --format 'pixi.js' --name background sprites/background/*.png",
+    "spritesheet-fg": "spritesheet-js --format 'pixi.js' --name foreground sprites/foreground/*.png"
+  }
+}
