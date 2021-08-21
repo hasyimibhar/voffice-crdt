@@ -1,11 +1,26 @@
 {
   "dependencies": {
     "http-server": "^13.0.1",
+    "peerjs": "^1.3.2",
+    "pixi.js": "^6.1.2",
     "spritesheet-js": "^1.2.6"
   },
   "scripts": {
-    "serve": "http-server",
-    "spritesheet-bg": "spritesheet-js --format 'pixi.js' --name background sprites/background/*.png",
-    "spritesheet-fg": "spritesheet-js --format 'pixi.js' --name foreground sprites/foreground/*.png"
+    "build": "webpack --mode development --config webpack.config.js",
+    "start": "webpack-dev-server --config webpack.config.js",
+    "spritesheet-bg": "spritesheet-js --format 'pixi.js' --name background --path dist build/sprites/background/*.png",
+    "spritesheet-fg": "spritesheet-js --format 'pixi.js' --name foreground --path dist build/sprites/foreground/*.png"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "copy-webpack-plugin": "^9.0.1",
+    "html-webpack-plugin": "^5.3.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.0.0",
+    "webpack-shell-plugin-next": "^2.2.2"
   }
 }

@@ -1,6 +1,22 @@
+import { Application } from '@pixi/app';
+import { Sprite } from '@pixi/sprite';
+import { SpritesheetLoader } from '@pixi/spritesheet';
+import { Container } from '@pixi/display';
+import { Loader } from '@pixi/loaders';
+
+import { Renderer } from '@pixi/core';
+import { BatchRenderer } from '@pixi/core';
+Renderer.registerPlugin('batch', BatchRenderer);
+
+import { TickerPlugin } from '@pixi/ticker';
+Application.registerPlugin(TickerPlugin)
+
 // Create the application helper and add its render target to the page
-let app = new PIXI.Application({ width: 640, height: 640 });
+let app = new Application({ width: 640, height: 640 });
 document.body.appendChild(app.view);
+
+const loader = new Loader();
+loader.use(SpritesheetLoader.use);
 
 let layers = [];
 
@@ -86,43 +102,43 @@ const fgTextures = {
   2: 'cactus.png',
 };
 
-PIXI.Loader.shared.add('background.json').load(setupBg);
+loader
+  .add('background', 'background.json')
+  .load(setupBg);
 
 const bgLayer = layers[0];
 const fgLayer = layers[1];
 const playersLayer = layers[2];
 
-const bgContainer = new PIXI.Container();
-const fgContainer = new PIXI.Container();
+const bgContainer = new Container();
+const fgContainer = new Container();
 
-function setupBg() {
-  const sheet = PIXI.Loader.shared.resources['background.json'].spritesheet;
-
+function setupBg(ld, resources) {
   for (let y = 0; y < 20; y++) {
     for (let x = 0; x < 20; x++) {
       const id = bgLayer[y][x];
-      const tile = new PIXI.Sprite(sheet.textures[bgTextures[id]]);
+      const tile = new Sprite(resources['background'].textures[bgTextures[id]]);
       tile.position.set(x * 32, y * 32);
-      bgContainer.addChild(tile);
+      app.stage.addChild(tile);
     }
   }
 
   app.stage.addChild(bgContainer);
 
-  PIXI.Loader.shared.add('foreground.json').load(setupFg);
+  loader
+    .add('foreground', 'foreground.json')
+    .load(setupFg);
 }
 
 let player = null;
 
-function setupFg() {
-  const sheet = PIXI.Loader.shared.resources['foreground.json'].spritesheet;
-
+function setupFg(ld, resources) {
   for (let y = 0; y < 20; y++) {
     for (let x = 0; x < 20; x++) {
       const id = fgLayer[y][x];
       if (id > 0) {
-        const texture = sheet.textures[fgTextures[id]];
-        const tile = new PIXI.Sprite(texture);
+        const texture = resources['foreground'].textures[fgTextures[id]];
+        const tile = new Sprite(texture);
 
         if (texture.height > 32) {
           tile.anchor.set(0, (texture.height-32)/texture.height);
@@ -134,7 +150,7 @@ function setupFg() {
     }
   }
 
-  player = new PIXI.Sprite(sheet.textures['player.png']);
+  player = new Sprite(resources['foreground'].textures['player.png']);
   app.stage.addChild(player);
 
   const playerX = player.position.x;
@@ -192,14 +208,3 @@ document.addEventListener('keydown', (event) => {
     });
   }
 });
-
-// // Create the sprite and add it to the stage
-// let sprite = PIXI.Sprite.from('sample.png');
-// app.stage.addChild(sprite);
-// 
-// // Add a ticker callback to move the sprite back and forth
-// let elapsed = 0.0;
-// app.ticker.add((delta) => {
-//   elapsed += delta;
-//   sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
-// });
