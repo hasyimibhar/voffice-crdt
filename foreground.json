@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"image": "foreground.png",
+		"size": {"w":64,"h":64},
+		"scale": "1"
+	},
+	"frames": {
+		"cactus.png":
+		{
+			"frame": {"x":0,"y":0,"w":32,"h":64},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":32,"h":64},
+			"sourceSize": {"w":32,"h":64}
+		},
+		"block.png":
+		{
+			"frame": {"x":32,"y":0,"w":32,"h":32},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+			"sourceSize": {"w":32,"h":32}
+		},
+		"player.png":
+		{
+			"frame": {"x":32,"y":32,"w":32,"h":32},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+			"sourceSize": {"w":32,"h":32}
+		}
+	}
+}
